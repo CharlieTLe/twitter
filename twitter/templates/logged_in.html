@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block login %}
+{% with user.username as username %}
+{{ block.super }}
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-3">
+    <br>
+    <div class="panel panel-default">
+        <div class="jumbotron">
+            
+        </div>
+        <div class="panel-body">
+            <h3><a href="/users/{{ user.username }}">{{ user.username }}</a></h3>
+            <p>
+                <strong>{{ user.profile.tweet_count }}</strong> <small>TWEETS</small>
+                <strong>{{ user.profile.followed_by.count }}</strong> <small>FOLLOWERS</small>
+                <strong>{{ user.profile.follows.count }}</strong> <small>FOLLOWING</small>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <br>
+    <center>
+        <div class="panel panel-info" style="padding: 10px; background: #E8F4FB;">
+            <form action="/submit" method="post">
+                {% for field in tweet_form %}
+                {% csrf_token %}
+                {% render_field field class="form-control" rows="4" placeholder="What’s happening?" %}
+                {% endfor %}
+                <br>
+                <input type="hidden" value="{{ next_url }}" name="next_url">
+                <p class="text-right"><input class="btn btn-primary" type="submit" value="Tweet"></p>
+            </form>
+        </div>
+    </center>
+
+    {% for tweet in tweets %}
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h4><a href="/users/{{ tweet.user.username }}">{{ tweet.user.username }}</a> <small> &middot; {{ tweet.creation_date|timesince }} ago</small></h4>
+            <h2>{{ tweet.content }}</h2>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+
+<div class="col-md-3">
+    &nbsp;
+</div>
+
+
+
+{% endblock %}

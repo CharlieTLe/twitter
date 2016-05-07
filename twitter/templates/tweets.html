@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <div class="container">
+        <center>
+            <h1>Tweets</h1>
+        </center>
+    </div>
+</div>
+
+<div class="container">
+    {% for tweet in tweets %}
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4><a href="/users/{{ tweet.user.username }}">{{ tweet.user.username }}</a> <small>&middot; {{ tweet.creation_date|timesince }} ago</small></h4>
+                <h2>{{ tweet.content }}</h2>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

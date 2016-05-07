@@ -1,0 +1,104 @@
+
+<head>
+    <title>Twitter</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+
+    <style>
+
+    body {
+        margin: 0;
+        background-color: #F5F8FA;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .navbar-default {
+        background-color: #fff;
+        margin: 0;
+    }
+
+    .jumbotron {
+        color: #fff;
+        background-image: linear-gradient(
+          to right, 
+          #59ADEB, #35CE93
+          );
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="wrapper">
+            {% block login %}
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Twitter</a>         
+
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="/users/">Users</a></li>
+                <li><a href="/tweets">Tweets</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" action="/logout">
+                <a class="btn btn-default" href="/users/{{ user.username }}">Profile</a>
+                <input class="btn btn-default" type="submit" id="btnLogOut" value="Log Out">
+            </form>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+{% endblock %}
+</div>
+</header>
+
+<div id="content">
+    <div class="wrapper">
+        {% block flash %}
+        {% if auth_form.non_field_errors or user_form.non_field_errors or tweet_form.errors %}
+        <div class="alert error">
+            {{ auth_form.non_field_errors }}
+            {{ user_form.non_field_errors }}
+            {{ tweet_form.content.errors }}
+        </div>
+        {% endif %}
+        {% if notice %}
+        <div class="flash notice">
+            {{ notice }}
+        </div>
+        {% endif %}
+        {% endblock %}
+
+        {% block content %}
+
+        {% endblock %}
+    </div>
+</div>
+
+</body>

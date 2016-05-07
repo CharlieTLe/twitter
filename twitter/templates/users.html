@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <div class="container">
+        <center>
+            <h1>Users</h1>
+        </center>
+    </div>
+</div>
+
+<div class="container">
+    {% for user, tweet in obj %}
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3><a href="/users/{{ user.username }}">{{ user.username }}</a></h3>
+                <p>
+                    <strong>{{ user.tweet_count}}</strong> <small>TWEETS</small>
+                    <strong>{{ user.profile.followed_by.count }}</strong> <small>FOLLOWERS</small>
+                    <strong>{{ user.profile.follows.count }}</strong> <small>FOLLOWING</small>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
