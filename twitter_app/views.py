@@ -16,7 +16,7 @@ def index(request, auth_form=None, user_form=None):
         user = request.user
         tweets_self = Tweet.objects.filter(user=user.id)
         tweets_buddies = Tweet.objects.filter(user__userprofile__in=user.profile.follows.all)
-        tweets = tweets_self | tweets_buddies
+        tweets = (tweets_self | tweets_buddies).reverse()[::-1]
 
         return render(request, 'logged_in.html', 
             {'tweet_form': tweet_form, 'user': user,
@@ -61,7 +61,7 @@ def signup(request):
 
 def public(request, tweet_form=None):
     tweet_form = tweet_form or TweetForm()
-    tweets = Tweet.objects.reverse()[:10]
+    tweets = Tweet.objects.reverse()[::-1]
     return render(request,
                   'tweets.html',
                   {'tweet_form': tweet_form, 'next_url': '/tweets',
