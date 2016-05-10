@@ -26,5 +26,8 @@ textarea {
 }
 
 .alert {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
     margin: 0;
 }

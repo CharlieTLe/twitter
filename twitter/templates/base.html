@@ -46,6 +46,7 @@
 
     {% if auth_form.non_field_errors or user_form.non_field_errors or tweet_form.errors %}
     <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
         {{ auth_form.non_field_errors }}
         {{ user_form.non_field_errors }}
         {{ tweet_form.content.errors }}
