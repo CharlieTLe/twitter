@@ -18,5 +18,3 @@ A Twitter clone made with Django.
 
 2. Go to <a href="http://localhost:8000/">http://localhost:8000/</a>
 
-Please note that this development version may differ from the production version. 
-
