@@ -20,11 +20,10 @@ def index(request, auth_form=None, user_form=None):
 
         return render(request, 'logged_in.html', 
             {'tweet_form': tweet_form, 'user': user,
-            'tweets': tweets, 'next_url': '/',})
+            'tweets': tweets, 'tweet_count': len(tweets_self), 'next_url': '/',})
     else:
         auth_form = auth_form or AuthForm()
         user_form = user_form or UserForm()
-
         return render(request, 'home.html', {'auth_form': auth_form, 'user_form': user_form, })
 
 
@@ -88,10 +87,11 @@ def users(request, username="", tweet_form=None):
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             raise Http404
-        tweets = Tweet.objects.filter(user=user.id)
+        tweets = Tweet.objects.filter(user=user.id).reverse()[::-1]
         if username == request.user.username or request.user.profile.follows.filter(user__username=username):
-            return render(request, 'profile.html', {'user': user, 'tweets': tweets, })
-        return render(request, 'profile.html', {'user': user, 'tweets': tweets, 'follow': True, })
+            return render(request, 'profile.html', {'user': user, 'tweet_count': len(tweets), 'tweets': tweets, })
+        return render(request, 'profile.html', {'user': user, 'tweet_count': len(tweets), 'tweets': tweets, 'follow': True, })
+
     users = User.objects.all().annotate(tweet_count=Count('tweet'))
     tweets = users
     obj = zip(users, tweets)

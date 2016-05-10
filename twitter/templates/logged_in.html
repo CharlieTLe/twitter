@@ -13,12 +13,12 @@
     <br>
     <div class="panel panel-default">
         <div class="jumbotron">
-            
+
         </div>
         <div class="panel-body">
             <h3><a href="/users/{{ user.username }}">{{ user.username }}</a></h3>
             <p>
-                <strong>{{ user.profile.tweet_count }}</strong> <small>TWEETS</small>
+                <strong>{{ tweet_count }}</strong> <small>TWEETS</small>
                 <strong>{{ user.profile.followed_by.count }}</strong> <small>FOLLOWERS</small>
                 <strong>{{ user.profile.follows.count }}</strong> <small>FOLLOWING</small>
             </p>
@@ -52,12 +52,22 @@
     </div>
 
     {% endfor %}
+
+    <br>
 </div>
 
 <div class="col-md-3 animated fadeIn">
-    &nbsp;
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <center>
+                <i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i>
+            </center>
+            <h4>Tip</h4>
+            <p>Is your feed feeling empty? Visit the <a href="/users">users</a> page and find people to follow!</p>
+            
+        </div>
+    </div>
 </div>
-
-
 
 {% endblock %}

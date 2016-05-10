@@ -19,7 +19,7 @@
         <h2>{{ user.username }}</h2>
         <hr>
         <p>
-            <strong>{{ tweets.count }}</strong> TWEETS
+            <strong>{{ tweet_count }}</strong> TWEETS
             <strong>{{ user.profile.follows.all.count }}</strong> FOLLOWING 
             <strong>{{ user.profile.followed_by.all.count }}</strong> FOLLOWERS
         </p>
@@ -51,4 +51,5 @@
     </div>
 
 </div>
+<br>
 {% endblock %}
