@@ -11,6 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def index(request, auth_form=None, user_form=None):
+    current_user = request.user
     if request.user.is_authenticated():
         tweet_form = TweetForm()
         user = request.user
@@ -18,7 +19,6 @@ def index(request, auth_form=None, user_form=None):
         tweet_count = len(tweets_self)
         tweets_buddies = Tweet.objects.filter(user__userprofile__in=user.profile.follows.all)
         tweets = (tweets_self | tweets_buddies).reverse()[::-1]
-
         return render(request, 'logged_in.html', 
             {'tweet_form': tweet_form, 'user': user,
             'tweets': tweets, 'tweet_count': tweet_count, 'next_url': '/',})
@@ -86,13 +86,14 @@ def users(request, username="", tweet_form=None):
     if username:
         try:
             user = User.objects.get(username=username)
+            current_user = request.user;
         except User.DoesNotExist:
             raise Http404
         tweets = Tweet.objects.filter(user=user.id).reverse()[::-1]
         tweet_count = len(tweets)
         if username == request.user.username or request.user.profile.follows.filter(user__username=username):
-            return render(request, 'profile.html', {'user': user, 'tweet_count': tweet_count, 'tweets': tweets, })
-        return render(request, 'profile.html', {'user': user, 'tweet_count': tweet_count, 'tweets': tweets, 'follow': True, })
+            return render(request, 'profile.html', {'user': user, 'tweet_count': tweet_count, 'current_user': current_user, 'tweets': tweets, })
+        return render(request, 'profile.html', {'user': user, 'tweet_count': tweet_count, 'current_user': current_user, 'tweets': tweets, 'follow': True, })
 
     users = User.objects.all().annotate(tweet_count=Count('tweet'))
     tweets = users
